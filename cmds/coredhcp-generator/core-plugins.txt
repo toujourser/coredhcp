@@ -1,0 +1,15 @@
+github.com/toujourser/coredhcp/plugins/autoconfigure
+github.com/toujourser/coredhcp/plugins/dns
+github.com/toujourser/coredhcp/plugins/file
+github.com/toujourser/coredhcp/plugins/ipv6only
+github.com/toujourser/coredhcp/plugins/leasetime
+github.com/toujourser/coredhcp/plugins/mtu
+github.com/toujourser/coredhcp/plugins/netmask
+github.com/toujourser/coredhcp/plugins/nbp
+github.com/toujourser/coredhcp/plugins/prefix
+github.com/toujourser/coredhcp/plugins/range
+github.com/toujourser/coredhcp/plugins/router
+github.com/toujourser/coredhcp/plugins/serverid
+github.com/toujourser/coredhcp/plugins/searchdomains
+github.com/toujourser/coredhcp/plugins/sleep
+github.com/toujourser/coredhcp/plugins/staticroute
