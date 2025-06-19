@@ -150,8 +150,10 @@ func setup4(args ...string) (handler.Handler4, error) {
 			resp.Options.Update(*bootOpt)
 		}
 
-		log.Printf("u.Scheme: %s, u.Host: %s, u.Path: %s, Generated boot path for [%s]: [%s]", u.Scheme, u.Host, u.Path, archStr, modifiedURL.String())
-		log.Print("----------------------------------------------------")
+		if archStr != "default" {
+			log.Printf("u.Scheme: %s, u.Host: %s, u.Path: %s, Generated boot path for [%s]: [%s]", u.Scheme, u.Host, u.Path, archStr, modifiedURL.String())
+			log.Print("----------------------------------------------------")
+		}
 		return resp, true
 	}, nil
 
