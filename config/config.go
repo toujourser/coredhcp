@@ -109,7 +109,24 @@ func parsePlugins(pluginList []interface{}) ([]PluginConfig, error) {
 		// only one item, as enforced above, so read just that
 		for k, v := range conf {
 			name = k
-			args = strings.Fields(cast.ToString(v))
+			// Handle both string and slice formats for plugin arguments
+			switch val := v.(type) {
+			case []interface{}:
+				// Handle array format like:
+				// - whitelist:
+				//     - "00:11:22:33:44:55"
+				//     - "aa:bb:cc:dd:ee:ff"
+				args = make([]string, len(val))
+				for i, item := range val {
+					args[i] = cast.ToString(item)
+				}
+			case string:
+				// Handle space-separated string format
+				args = strings.Fields(val)
+			default:
+				// Handle other formats by converting to string first
+				args = strings.Fields(cast.ToString(val))
+			}
 			break
 		}
 		plugins = append(plugins, PluginConfig{Name: name, Args: args})

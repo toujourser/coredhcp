@@ -62,6 +62,7 @@ func Handler4(req, resp *dhcpv4.DHCPv4) (*dhcpv4.DHCPv4, bool) {
 	}
 
 	macStr := strings.ToLower(req.ClientHWAddr.String())
+	log.Printf("[DHCP-whitelist] MAC address %s is in whitelist, allowing request", macStr)
 	if !whitelistedMACs[macStr] {
 		log.Infof("MAC address %s is not in whitelist, dropping request", macStr)
 		// Drop the request if MAC is not in whitelist
@@ -73,38 +74,51 @@ func Handler4(req, resp *dhcpv4.DHCPv4) (*dhcpv4.DHCPv4, bool) {
 }
 
 func setup6(args ...string) (handler.Handler6, error) {
-	log.Printf("loading `whitelist` plugin for DHCPv6")
+	log.Printf("[DHCP-whitelist] loading `whitelist` plugin for DHCPv6")
+	log.Printf("[DHCP-whitelist] Args length=%d, content=%+v", len(args), args)
 
 	// Parse MAC addresses from args
 	whitelistedMACs = make(map[string]bool)
-	for _, arg := range args {
+	for i, arg := range args {
+		log.Printf("Processing arg[%d]: '%s'", i, arg)
 		mac := strings.ToLower(strings.TrimSpace(arg))
 		// Validate MAC address format (simple validation)
 		if len(mac) > 0 {
+			log.Printf("[DHCP-whitelist] Adding MAC to whitelist: '%s'", mac)
 			whitelistedMACs[mac] = true
+		} else {
+			log.Printf("[DHCP-whitelist] Skipping empty MAC address at arg[%d]", i)
 		}
 	}
 
-	log.Printf("configured whitelist with %d MAC addresses", len(whitelistedMACs))
+	log.Printf("[DHCP-whitelist] Final whitelistedMACs content: %+v, %d", whitelistedMACs, len(whitelistedMACs))
 	return Handler6, nil
 }
 
 func setup4(args ...string) (handler.Handler4, error) {
-	log.Printf("loading `whitelist` plugin for DHCPv4")
+	log.Printf("[DHCP-whitelist] loading `whitelist` plugin for DHCPv6")
+	log.Printf("[DHCP-whitelist] Args length=%d, content=%+v", len(args), args)
 
 	// For DHCPv4, we use the same whitelist as DHCPv6
 	// If this is the first setup call, parse the MAC addresses
 	if whitelistedMACs == nil {
+		log.Printf("[DHCP-whitelist] Initializing whitelistedMACs map")
 		whitelistedMACs = make(map[string]bool)
-		for _, arg := range args {
+		for i, arg := range args {
+			log.Printf("[DHCP-whitelist] Processing arg[%d]: '%s'", i, arg)
 			mac := strings.ToLower(strings.TrimSpace(arg))
 			// Validate MAC address format (simple validation)
 			if len(mac) > 0 {
+				log.Printf("[DHCP-whitelist] Adding MAC to whitelist: '%s'", mac)
 				whitelistedMACs[mac] = true
+			} else {
+				log.Printf("[DHCP-whitelist] Skipping empty MAC address at arg[%d]", i)
 			}
 		}
+	} else {
+		log.Printf("[DHCP-whitelist] whitelistedMACs already initialized with %d entries", len(whitelistedMACs))
 	}
 
-	log.Printf("------------- configured whitelist with %d MAC addresses", len(whitelistedMACs))
+	log.Printf("[DHCP-whitelist] Final whitelistedMACs content: %+v, %d", whitelistedMACs, len(whitelistedMACs))
 	return Handler4, nil
 }
