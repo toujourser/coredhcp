@@ -13,3 +13,4 @@ github.com/toujourser/coredhcp/plugins/serverid
 github.com/toujourser/coredhcp/plugins/searchdomains
 github.com/toujourser/coredhcp/plugins/sleep
 github.com/toujourser/coredhcp/plugins/staticroute
+github.com/toujourser/coredhcp/plugins/whitelist

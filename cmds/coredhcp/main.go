@@ -108,7 +108,6 @@ func main() {
 		log.Infof("Disabling logging to stdout/stderr")
 		logger.WithNoStdOutErr(log)
 	}
-	println("---------------")
 	config, err := config.Load(*flagConfig)
 	if err != nil {
 		log.Fatalf("Failed to load configuration: %v", err)

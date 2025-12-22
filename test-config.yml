@@ -1,0 +1,8 @@
+server4:
+    listen: '127.0.0.1:67'
+    plugins:
+        - whitelist:
+            - "00:11:22:33:44:55"
+            - "aa:bb:cc:dd:ee:ff"
+        - server_id: 127.0.0.1
+        - range: "test-leases.txt" "127.0.0.100" "127.0.0.200" "24h"
