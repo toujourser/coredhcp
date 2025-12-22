@@ -1,0 +1,21 @@
+# CoreDHCP Test Configuration with MAC Whitelist
+#
+# This is a test configuration file to demonstrate the whitelist plugin functionality.
+
+server6:
+    listen: '[::1]:547'
+    plugins:
+        - whitelist:
+            - "00:11:22:33:44:55"
+            - "aa:bb:cc:dd:ee:ff"
+        - server_id: LL 00:de:ad:be:ef:00
+        - file: "test-leases-v6.txt"
+
+server4:
+    listen: '127.0.0.1:67'
+    plugins:
+        - whitelist:
+            - "00:11:22:33:44:55"
+            - "aa:bb:cc:dd:ee:ff"
+        - server_id: 127.0.0.1
+        - range: "test-leases-v4.txt" "127.0.0.100" "127.0.0.200" "24h"

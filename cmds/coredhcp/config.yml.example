@@ -1,0 +1,37 @@
+# CoreDHCP Example Configuration with MAC Whitelist
+#
+# This is an example configuration file showing how to use the whitelist plugin.
+# The whitelist plugin allows you to specify which MAC addresses are allowed to
+# receive IP assignments from the DHCP server.
+
+server6:
+    # Listen on all interfaces for DHCPv6
+    listen: '[::]:547'
+    plugins:
+        # First check if the client's MAC is in the whitelist
+        - whitelist: 
+            - "00:11:22:33:44:55"
+            - "aa:bb:cc:dd:ee:ff"
+        # Server identifier
+        - server_id: LL 00:de:ad:be:ef:00
+        # File-based lease storage
+        - file: "leases.txt"
+        # DNS servers to advertise
+        - dns: 8.8.8.8 8.8.4.4 2001:4860:4860::8888 2001:4860:4860::8844
+
+server4:
+    # Listen on all interfaces for DHCPv4
+    listen: '0.0.0.0:67'
+    plugins:
+        # First check if the client's MAC is in the whitelist
+        - whitelist:
+            - "00:11:22:33:44:55"
+            - "aa:bb:cc:dd:ee:ff"
+        # Server identifier
+        - server_id: 10.0.0.1
+        # Range-based IP assignment
+        - range: "leases.txt" "10.0.0.100" "10.0.0.200" "24h"
+        # Router to advertise
+        - router: 10.0.0.1
+        # DNS servers to advertise
+        - dns: 8.8.8.8 8.8.4.4

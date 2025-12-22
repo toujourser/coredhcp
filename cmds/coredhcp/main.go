@@ -32,6 +32,7 @@ import (
 	pl_serverid "github.com/toujourser/coredhcp/plugins/serverid"
 	pl_sleep "github.com/toujourser/coredhcp/plugins/sleep"
 	pl_staticroute "github.com/toujourser/coredhcp/plugins/staticroute"
+	pl_whitelist "github.com/toujourser/coredhcp/plugins/whitelist"
 
 	"github.com/sirupsen/logrus"
 	flag "github.com/spf13/pflag"
@@ -79,6 +80,7 @@ var desiredPlugins = []*plugins.Plugin{
 	&pl_sleep.Plugin,
 	&pl_staticroute.Plugin,
 	&pl_nextserver.Plugin,
+	&pl_whitelist.Plugin,
 }
 
 func main() {
