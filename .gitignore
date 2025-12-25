@@ -9,3 +9,6 @@ cmds/coredhcp-generator/coredhcp-generator
 coverage.txt
 go.sum
 .idea/
+.DS_Store
+**/.DS_Store
+*/.DS_Store
